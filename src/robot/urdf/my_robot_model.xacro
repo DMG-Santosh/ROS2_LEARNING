@@ -1,0 +1,137 @@
+<?xml version = "1.0"?>
+
+<!-- Enable the Xacro namespace so that 
+     this XML file can use Xacro-specific tags,
+     it is being used as a unique name/identifier for the Xacro namespace
+
+     XML namespace(xmlns) identifiers are commonly written using URI/URL-looking 
+     strings because they are intended to be globally unique
+-->
+
+<robot xmlns:xacro = "http://www.ros.org/wiki/xacro"
+       name = "my_robot">
+
+    <xacro:property name = "base_size" value = "1.0"/>
+    <xacro:property name = "top_size" value = "0.5"/>
+    <xacro:property name = "end_size" value="0.3"/>
+
+    <link name = "base_link">
+
+        <visual>
+
+            <geometry>
+
+                <box size = "${base_size} ${base_size} ${base_size}"/>
+
+            </geometry>
+
+        </visual>
+
+        <collision>
+
+            <geometry>
+
+                <box size="${base_size} ${base_size} ${base_size}"/>
+
+            </geometry>
+
+        </collision>
+
+    </link>
+
+    <link name = "top_link">
+
+        <visual>
+
+            <geometry>
+
+                <box size="${top_size} ${top_size} ${top_size}"/>
+
+            </geometry>
+
+        </visual>
+
+        <collision>
+
+            <geometry>
+
+                <box size="${top_size} ${top_size} ${top_size}"/>
+
+            </geometry>
+
+        </collision>
+
+    </link>
+
+    	
+	<link name="end_link">
+		
+		<visual>
+
+			<geometry>
+
+				<mesh filename="package://robot/meshes/simple_pyramid.stl"/>
+
+			</geometry>
+			
+			<material name="green">
+
+				<color rgba="1 1 1 1"/>
+
+			</material>
+
+		</visual>
+		
+		<collision>
+
+			<geometry>
+
+				<box size="${end_size} ${end_size} ${end_size}"/>
+
+			</geometry>
+
+		</collision>
+
+	</link>
+
+    <!-- Joint connecting base_link and top_link -->
+	<joint name="base_joint" type="revolute">
+
+		<!-- Position and orientation of the joint -->
+		<origin xyz="0 0 ${base_size/2 + top_size/2}" rpy="0 0 0"/>
+
+		<!-- Parent link of this joint -->
+		<parent link="base_link"/>
+
+		<!-- Child link of this joint -->
+		<child link="top_link"/>
+
+		<!-- Rotation axis of the joint -->
+		<axis xyz="0 1 0"/>
+
+		<!-- Joint rotation limits: -90° to +90° -->
+		<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+
+	</joint>
+
+    <!-- Joint connecting top_link and end_link -->
+	<joint name="end_joint" type="revolute">
+
+		<!-- Position and orientation of the joint -->
+		<origin xyz="0 0 ${top_size}" rpy="0 0 0"/>
+
+		<!-- Parent link of this joint -->
+		<parent link="top_link"/>
+
+		<!-- Child link of this joint -->
+		<child link="end_link"/>
+
+		<!-- Rotation axis of the joint -->
+		<axis xyz="0 1 0"/>
+
+		<!-- Joint rotation limits: -90° to +90° -->
+		<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+
+	</joint>
+
+</robot>

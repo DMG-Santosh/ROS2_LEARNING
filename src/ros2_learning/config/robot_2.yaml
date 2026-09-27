@@ -1,0 +1,6 @@
+parameter_node:
+  ros__parameters:
+    my_number: 100
+    my_speed: 5.0
+    robot_name: "Robot_2"
+    robot_enabled: true

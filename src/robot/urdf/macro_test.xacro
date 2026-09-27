@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="my_robot">
+
+    <!-- ========================================================= -->
+    <!-- XACRO PROPERTIES                                         -->
+    <!-- ========================================================= -->
+
+    <!-- Base link size -->
+    <xacro:property name="base_size" value="1.0"/>
+
+    <!-- Top link size -->
+    <xacro:property name="top_size" value="0.5"/>
+
+    <!-- End link collision size -->
+    <xacro:property name="end_size" value="0.3"/>
+
+
+    <!-- ========================================================= -->
+    <!-- REUSABLE BOX LINK MACRO                                  -->
+    <!-- ========================================================= -->
+
+    <xacro:macro name="create_box_link"
+                 params="link_name size">
+
+        <link name="${link_name}">
+
+            <!-- Visual -->
+            <visual>
+
+                <geometry>
+
+                    <box size="${size} ${size} ${size}"/>
+
+                </geometry>
+
+            </visual>
+
+            <!-- Collision -->
+            <collision>
+
+                <geometry>
+
+                    <box size="${size} ${size} ${size}"/>
+
+                </geometry>
+
+            </collision>
+
+        </link>
+
+    </xacro:macro>
+
+
+    <!-- ========================================================= -->
+    <!-- BASE LINK                                                 -->
+    <!-- ========================================================= -->
+
+    <xacro:create_box_link
+        link_name="base_link"
+        size="${base_size}"/>
+
+
+    <!-- ========================================================= -->
+    <!-- TOP LINK                                                  -->
+    <!-- ========================================================= -->
+
+    <xacro:create_box_link
+        link_name="top_link"
+        size="${top_size}"/>
+
+
+    <!-- ========================================================= -->
+    <!-- END LINK                                                  -->
+    <!-- ========================================================= -->
+
+    <link name="end_link">
+
+        <!-- Visual appearance of the end link -->
+        <visual>
+
+            <geometry>
+
+                <mesh filename="package://robot/meshes/simple_pyramid.stl"/>
+
+            </geometry>
+
+            <!-- Color of the end link -->
+            <material name="green">
+
+                <color rgba="1 1 1 1"/>
+
+            </material>
+
+        </visual>
+
+        <!-- Collision shape of the end link -->
+        <collision>
+
+            <geometry>
+
+                <box size="${end_size} ${end_size} ${end_size}"/>
+
+            </geometry>
+
+        </collision>
+
+    </link>
+
+
+    <!-- ========================================================= -->
+    <!-- BASE JOINT                                                -->
+    <!-- ========================================================= -->
+
+    <joint name="base_joint" type="revolute">
+
+        <!--
+            Base box height  = base_size
+            Top box height   = top_size
+
+            Joint position:
+            half base height + half top height
+        -->
+        <origin
+            xyz="0 0 ${base_size/2 + top_size/2}"
+            rpy="0 0 0"/>
+
+        <parent link="base_link"/>
+
+        <child link="top_link"/>
+
+        <axis xyz="0 1 0"/>
+
+        <limit
+            lower="-1.57"
+            upper="1.57"
+            effort="10"
+            velocity="1"/>
+
+    </joint>
+
+
+    <!-- ========================================================= -->
+    <!-- END JOINT                                                 -->
+    <!-- ========================================================= -->
+
+    <joint name="end_joint" type="revolute">
+
+        <!-- Position of end link relative to top link -->
+        <origin
+            xyz="0 0 ${top_size}"
+            rpy="0 0 0"/>
+
+        <parent link="top_link"/>
+
+        <child link="end_link"/>
+
+        <axis xyz="0 1 0"/>
+
+        <limit
+            lower="-1.57"
+            upper="1.57"
+            effort="10"
+            velocity="1"/>
+
+    </joint>
+
+</robot>

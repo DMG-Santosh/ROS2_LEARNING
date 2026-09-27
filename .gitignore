@@ -1,0 +1,38 @@
+# ROS 2 generated directories
+build/
+install/
+log/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Python packaging
+*.egg-info/
+dist/
+*.egg
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+install_manifest.txt
+
+# Colcon generated files
+colcon_command_prefix_build.sh
+colcon_*
+*.dsv
+
+# ROS logs
+.ros/
+
+# Editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,15 @@
+# This line identifies the node name.
+parameter_node:
+  # This line shows that the parameters defined here belongs to this above node
+  ros__parameters:
+
+    # corresponds to self.declare_parameter("my_number", 10)
+    my_number: 50
+
+    # self.declare_parameter("my_speed", 2.5)
+    my_speed: 2.5
+
+    # self.declare_parameter("robot_name", "My_Robot")
+    robot_name: "My_Robot"
+
+    robot_enabled: true

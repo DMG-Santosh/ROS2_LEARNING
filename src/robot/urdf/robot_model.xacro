@@ -1,0 +1,53 @@
+<?xml version = "1.0"?>
+
+<!-- enable xacro features -->
+<robot xmlns:xacro = "http://www.ros.org/wiki/xacro"
+       name = "robot_model">
+
+
+       
+
+       <!-- Reusable box link macro-->
+       <xacro:macro name = "create_box_link" params = "link_name size">
+
+            <link name = "${link_name}">
+
+                <visual>
+
+                    <geometry>
+
+                        <box size = "${size} ${size} ${size}"/>
+
+                    </geometry>
+
+                </visual>
+
+            </link>
+
+        </xacro:macro>
+
+        <!-- First macro call -->
+        <xacro:create_box_link
+            link_name = "first_box"
+            size = "0.5"/>
+
+        <!-- Second macro call -->
+        <xacro:create_box_link
+            link_name = "second_box"
+            size = "1.0"/>
+
+    <!-- Joint connecting first_box and second_box -->
+    <joint name = "box_joint" type = "fixed">
+
+        <!-- Position of the second box -->
+        <origin xyz = "0 0 0.75" rpy = "0 0 0"/>
+
+        <!--Parent link -->
+        <parent link = "first_box"/>
+
+        <!-- Child link -->
+        <child link = "second_box"/>
+
+    </joint>
+
+</robot>

@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+
+<robot name="my_robot">
+
+	<!-- This is the first link -->
+	<link name="base_link">
+
+		<visual>
+
+			<geometry>
+
+				<box size="1 1 1"/>
+
+			</geometry>
+
+		</visual>
+
+		<!-- Collision shape of the base -->
+		<collision>
+
+			<geometry>
+
+				<box size="1 1 1"/>
+
+			</geometry>
+
+		</collision>
+
+	</link>
+
+
+	<!-- This is the second link -->
+	<link name="top_link">
+
+		<!-- Visual appearance of the top link -->
+		<visual>
+
+			<geometry>
+
+				<box size="0.5 0.5 0.5"/>
+
+			</geometry>
+
+		</visual>
+
+		<!-- Collision shape of the top link -->
+		<collision>
+
+			<geometry>
+
+				<box size="0.5 0.5 0.5"/>
+
+			</geometry>
+
+		</collision>
+
+	</link>
+
+    <!-- This is the third link , named "end_link" -->
+    <link name = "end_link">
+
+        <!-- Visual appearance of the end link -->
+        <visual>
+
+            <geometry>
+
+                <mesh filename="package://robot/meshes/simple_pyramid.stl"/>
+
+            </geometry>
+
+			<!-- Color of the end link-->
+			<material name = "green">
+
+				<color rgba = "1 1 1 1"/>
+
+			</material>
+
+        </visual>
+
+        <!-- Collision shape of the end link-->
+        <collision>
+            
+            <geometry>
+
+                <box size = "0.3 0.3 0.3"/>
+
+            </geometry>
+
+        </collision>
+
+    </link>
+
+
+	<!-- Joint connecting base_link and top_link -->
+	<joint name="base_joint" type="revolute">
+
+		<!-- Position and orientation of the joint -->
+		<origin xyz="0 0 1" rpy="0 0 0"/>
+
+		<!-- Parent link of this joint -->
+		<parent link="base_link"/>
+
+		<!-- Child link of this joint -->
+		<child link="top_link"/>
+
+		<!-- Rotation axis of the joint -->
+		<axis xyz="0 1 0"/>
+
+		<!-- Joint rotation limits: -90° to +90° -->
+		<limit lower="-1.57" upper="1.57" effort="10" velocity="1"/>
+
+	</joint>
+
+    <!-- Joint connecting top_link and end_link-->
+    <joint name = "end_joint" type = "revolute">
+
+        <!-- Position and orientation of the joint-->
+        <origin xyz = "0 0 0.5" rpy = "0 0 0"/>
+
+        <!-- Parent link of this joint-->
+        <parent link = "top_link"/>
+
+        <!-- Child link of this joint-->
+        <child link = "end_link"/>
+
+        <!-- Rotation axis of the joint-->
+        <axis xyz = "0 1 0"/>
+
+        <!-- Joint rotation limits: -90 to +90-->
+        <limit lower = "-1.57" upper = "1.57" effort = "10" velocity = "1"/>
+
+    </joint>
+
+</robot>
