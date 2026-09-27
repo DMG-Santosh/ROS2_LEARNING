@@ -280,3 +280,7 @@ It is used to practice:
 * Configuration files
 * ROS 2 workspace management
 * Git and GitHub version control
+
+## Learning Progress
+
+This repository is continuously updated as I learn and practice ROS 2 concepts.
